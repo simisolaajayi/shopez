@@ -1,0 +1,73 @@
+<div class="shop-page">
+  <!-- Sidebar Filters -->
+  <aside class="shop-sidebar">
+    <h3 class="sidebar__title">Filters</h3>
+    <form action="/products" method="GET" id="filterForm">
+      {{#if query}}<input type="hidden" name="q" value="{{query}}">{{/if}}
+
+      <div class="filter-group">
+        <label class="filter-label">Category</label>
+        {{#each categories}}
+          <label class="filter-option">
+            <input type="radio" name="category" value="{{this}}" {{#if (eq this ../selectedCategory)}}checked{{/if}}
+              onchange="document.getElementById('filterForm').submit()">
+            <span>{{this}}</span>
+          </label>
+        {{/each}}
+        <label class="filter-option">
+          <input type="radio" name="category" value="" {{#unless selectedCategory}}checked{{/unless}}
+            onchange="document.getElementById('filterForm').submit()">
+          <span>All Categories</span>
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Price Range</label>
+        <div class="price-inputs">
+          <input type="number" name="minPrice" placeholder="Min $" class="price-input" value="">
+          <span>–</span>
+          <input type="number" name="maxPrice" placeholder="Max $" class="price-input" value="">
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Sort By</label>
+        <select name="sort" class="sort-select" onchange="document.getElementById('filterForm').submit()">
+          <option value="">Default</option>
+          <option value="price-asc" {{#if (eq selectedSort 'price-asc')}}selected{{/if}}>Price: Low to High</option>
+          <option value="price-desc" {{#if (eq selectedSort 'price-desc')}}selected{{/if}}>Price: High to Low</option>
+          <option value="rating" {{#if (eq selectedSort 'rating')}}selected{{/if}}>Highest Rated</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--full">Apply Filters</button>
+      <a href="/products" class="btn btn--outline btn--full">Clear All</a>
+    </form>
+  </aside>
+
+  <!-- Product Grid -->
+  <div class="shop-main">
+    <div class="shop-header">
+      <h1 class="shop-title">
+        {{#if query}}Results for "{{query}}"{{else}}All Products{{/if}}
+        {{#if selectedCategory}}<span class="category-tag">{{selectedCategory}}</span>{{/if}}
+      </h1>
+      <span class="result-count">{{count}} products</span>
+    </div>
+
+    {{#if products.length}}
+      <div class="products-grid products-grid--shop">
+        {{#each products}}
+          {{> product-card}}
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>No products found</h3>
+        <p>Try adjusting your filters or search terms</p>
+        <a href="/products" class="btn btn--primary">Browse All Products</a>
+      </div>
+    {{/if}}
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="container account-page">
+  <div class="account-header">
+    <div class="account-avatar">{{user.name.[0]}}</div>
+    <div>
+      <h1>{{user.name}}</h1>
+      <p>{{user.email}}</p>
+    </div>
+    <a href="/auth/logout" class="btn btn--outline">Logout</a>
+  </div>
+
+  <div class="account-grid">
+    <!-- Profile Card -->
+    <div class="account-card">
+      <h2>👤 Profile</h2>
+      <div class="profile-field"><label>Name</label><span>{{user.name}}</span></div>
+      <div class="profile-field"><label>Email</label><span>{{user.email}}</span></div>
+      <div class="profile-field"><label>Address</label><span>{{#if user.address}}{{user.address}}{{else}}Not set{{/if}}</span></div>
+      <a href="#" class="btn btn--outline btn--sm" onclick="alert('Edit profile coming soon!')">Edit Profile</a>
+    </div>
+
+    <!-- Stats -->
+    <div class="account-card">
+      <h2>📊 My Stats</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-num">{{user.orders.length}}</span>
+          <span class="stat-lbl">Orders</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">0</span>
+          <span class="stat-lbl">Wishlist</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">Gold</span>
+          <span class="stat-lbl">Tier</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders -->
+  <div class="account-card account-card--full">
+    <h2>📦 Order History</h2>
+    {{#if user.orders.length}}
+      <div class="orders-list">
+        {{#each user.orders}}
+          <div class="order-card">
+            <div class="order-card__header">
+              <div>
+                <strong>{{id}}</strong>
+                <span class="order-date">{{date}}</span>
+              </div>
+              <span class="status-badge">{{status}}</span>
+            </div>
+            <div class="order-card__items">
+              {{#each items}}
+                <div class="order-mini-item">
+                  <img src="{{image}}" alt="{{name}}">
+                  <span>{{name}} ×{{quantity}}</span>
+                  <span>${{multiply price quantity}}</span>
+                </div>
+              {{/each}}
+            </div>
+            <div class="order-card__footer">
+              <span>Shipped to: {{address}}</span>
+              <strong>Total: ${{total}}</strong>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="empty-state empty-state--sm">
+        <div class="empty-icon">📦</div>
+        <p>No orders yet. <a href="/products" class="link">Start shopping!</a></p>
+      </div>
+    {{/if}}
+  </div>
+</div>

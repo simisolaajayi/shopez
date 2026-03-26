@@ -1,0 +1,100 @@
+<div class="container checkout-page">
+  <h1 class="page-title">💳 Checkout</h1>
+
+  <div class="checkout-layout">
+    <!-- Form -->
+    <form action="/checkout/place-order" method="POST" class="checkout-form" onsubmit="return validateCheckout()">
+
+      <div class="checkout-section">
+        <h2>📦 Shipping Information</h2>
+        <div class="form-grid">
+          <div class="form-group form-group--full">
+            <label>Full Name</label>
+            <input type="text" name="fullname" value="{{user.name}}" required class="form-input" placeholder="John Doe">
+          </div>
+          <div class="form-group form-group--full">
+            <label>Email</label>
+            <input type="email" name="email" value="{{user.email}}" required class="form-input" placeholder="john@email.com">
+          </div>
+          <div class="form-group form-group--full">
+            <label>Street Address</label>
+            <input type="text" name="address" value="{{user.address}}" required class="form-input" placeholder="123 Main Street">
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" name="city" required class="form-input" placeholder="Lagos">
+          </div>
+          <div class="form-group">
+            <label>ZIP / Postal Code</label>
+            <input type="text" name="zip" required class="form-input" placeholder="100001">
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-section">
+        <h2>💳 Payment Details</h2>
+        <div class="card-logos">
+          <span class="card-logo">💳 Visa</span>
+          <span class="card-logo">💳 Mastercard</span>
+          <span class="card-logo">💳 PayPal</span>
+        </div>
+        <div class="form-grid">
+          <div class="form-group form-group--full">
+            <label>Card Number</label>
+            <input type="text" name="cardNumber" required class="form-input" placeholder="1234 5678 9012 3456"
+              maxlength="19" oninput="formatCard(this)">
+          </div>
+          <div class="form-group">
+            <label>Expiry Date</label>
+            <input type="text" name="expiry" required class="form-input" placeholder="MM/YY" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" name="cvv" required class="form-input" placeholder="123" maxlength="3">
+          </div>
+          <div class="form-group form-group--full">
+            <label>Name on Card</label>
+            <input type="text" name="cardName" required class="form-input" placeholder="John Doe">
+          </div>
+        </div>
+        <p class="demo-note">🔐 Demo mode — no real payment processed. Use any card number.</p>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--full btn--lg">
+        🔒 Place Order — ${{total}}
+      </button>
+    </form>
+
+    <!-- Summary -->
+    <div class="checkout-summary">
+      <h2>Order Summary</h2>
+      {{#each cart}}
+        <div class="checkout-item">
+          <img src="{{image}}" alt="{{name}}" class="checkout-item__img">
+          <div class="checkout-item__info">
+            <span class="checkout-item__name">{{name}}</span>
+            <span class="checkout-item__qty">×{{quantity}}</span>
+          </div>
+          <span class="checkout-item__price">${{multiply price quantity}}</span>
+        </div>
+      {{/each}}
+      <div class="summary-divider"></div>
+      <div class="summary-row summary-row--total">
+        <span>Total</span>
+        <span>${{total}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function formatCard(input) {
+  let val = input.value.replace(/\D/g, '').substring(0, 16);
+  input.value = val.replace(/(.{4})/g, '$1 ').trim();
+}
+function validateCheckout() {
+  const card = document.querySelector('[name="cardNumber"]').value.replace(/\s/g, '');
+  if (card.length < 13) { alert('Please enter a valid card number'); return false; }
+  return true;
+}
+</script>

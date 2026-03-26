@@ -1,0 +1,53 @@
+<div class="container success-page">
+  <div class="success-card">
+    <div class="success-icon">🎉</div>
+    <h1>Order Confirmed!</h1>
+    <p class="success-sub">Thank you for shopping with ShopEZ. Your order is being processed.</p>
+
+    <div class="order-box">
+      <div class="order-row">
+        <span>Order ID</span>
+        <strong>{{order.id}}</strong>
+      </div>
+      <div class="order-row">
+        <span>Date</span>
+        <span>{{order.date}}</span>
+      </div>
+      <div class="order-row">
+        <span>Status</span>
+        <span class="status-badge">{{order.status}}</span>
+      </div>
+      <div class="order-row">
+        <span>Ship To</span>
+        <span>{{order.address}}</span>
+      </div>
+      <div class="order-row">
+        <span>Payment</span>
+        <span>{{order.card}}</span>
+      </div>
+    </div>
+
+    <div class="order-items">
+      <h3>Items Ordered</h3>
+      {{#each order.items}}
+        <div class="checkout-item">
+          <img src="{{image}}" alt="{{name}}" class="checkout-item__img">
+          <div class="checkout-item__info">
+            <span class="checkout-item__name">{{name}}</span>
+            <span class="checkout-item__qty">×{{quantity}}</span>
+          </div>
+          <span class="checkout-item__price">${{multiply price quantity}}</span>
+        </div>
+      {{/each}}
+    </div>
+
+    <div class="order-total">
+      <strong>Total Paid: ${{order.total}}</strong>
+    </div>
+
+    <div class="success-actions">
+      <a href="/" class="btn btn--primary btn--lg">Continue Shopping</a>
+      <a href="/account" class="btn btn--outline btn--lg">View My Orders</a>
+    </div>
+  </div>
+</div>

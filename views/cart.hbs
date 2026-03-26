@@ -1,0 +1,96 @@
+<div class="container cart-page">
+  <h1 class="page-title">🛒 Your Cart</h1>
+
+  {{#if cart.length}}
+    <div class="cart-layout">
+      <!-- Cart Items -->
+      <div class="cart-items">
+        {{#each cart}}
+          <div class="cart-item">
+            <img src="{{image}}" alt="{{name}}" class="cart-item__img">
+            <div class="cart-item__info">
+              <h3 class="cart-item__name">{{name}}</h3>
+              <span class="cart-item__color">Color: {{color}}</span>
+              <span class="cart-item__price">${{formatPrice price}} each</span>
+            </div>
+            <div class="cart-item__controls">
+              <form action="/cart/update" method="POST" class="qty-form">
+                <input type="hidden" name="key" value="{{key}}">
+                <div class="qty-control qty-control--sm">
+                  <button type="button" onclick="const q=this.nextElementSibling;q.value=Math.max(1,parseInt(q.value)-1);this.closest('form').submit()">−</button>
+                  <input type="number" name="quantity" value="{{quantity}}" min="1" onchange="this.closest('form').submit()">
+                  <button type="button" onclick="const q=this.previousElementSibling;q.value=parseInt(q.value)+1;this.closest('form').submit()">+</button>
+                </div>
+              </form>
+              <div class="cart-item__subtotal">${{multiply price quantity}}</div>
+              <form action="/cart/remove" method="POST">
+                <input type="hidden" name="key" value="{{key}}">
+                <button type="submit" class="remove-btn" title="Remove">✕</button>
+              </form>
+            </div>
+          </div>
+        {{/each}}
+
+        <div class="cart-actions">
+          <form action="/cart/clear" method="POST">
+            <button type="submit" class="btn btn--outline">Clear Cart</button>
+          </form>
+          <a href="/products" class="btn btn--outline">← Continue Shopping</a>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="cart-summary">
+        <h2>Order Summary</h2>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>${{total}}</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span class="free-tag">FREE</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax (7.5%)</span>
+          <span id="taxVal">—</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-row summary-row--total">
+          <span>Total</span>
+          <span id="grandTotal">${{total}}</span>
+        </div>
+
+        <div class="promo-code">
+          <input type="text" placeholder="Promo code" class="promo-input">
+          <button class="btn btn--outline btn--sm" onclick="alert('Promo: SAVE10 applied! (demo)')">Apply</button>
+        </div>
+
+        <a href="/checkout" class="btn btn--primary btn--full btn--lg">
+          Proceed to Checkout →
+        </a>
+
+        <div class="secure-note">
+          🔒 Secure & encrypted checkout
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <div class="empty-state">
+      <div class="empty-icon">🛒</div>
+      <h3>Your cart is empty</h3>
+      <p>Looks like you haven't added anything yet. Start shopping!</p>
+      <a href="/products" class="btn btn--primary btn--lg">Browse Products</a>
+    </div>
+  {{/if}}
+</div>
+
+<script>
+  // Calculate tax and grand total on load
+  const total = parseFloat("{{total}}");
+  const tax = (total * 0.075).toFixed(2);
+  const grand = (total * 1.075).toFixed(2);
+  if (document.getElementById('taxVal')) {
+    document.getElementById('taxVal').textContent = '$' + tax;
+    document.getElementById('grandTotal').textContent = '$' + grand;
+  }
+</script>

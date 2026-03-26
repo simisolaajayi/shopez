@@ -1,0 +1,160 @@
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__content">
+    <div class="hero__badge">✨ New Arrivals Just Dropped</div>
+    <h1 class="hero__title">Shop Smart,<br><span class="gradient-text">Live Easy</span></h1>
+    <p class="hero__sub">Discover thousands of products curated just for you. Quality, style, and value — all in one place.</p>
+    <div class="hero__btns">
+      <a href="/products" class="btn btn--primary btn--lg">Shop Now →</a>
+      <a href="/products?badge=Sale" class="btn btn--outline btn--lg">View Deals</a>
+    </div>
+    <div class="hero__stats">
+      <div class="stat"><span class="stat__num">50k+</span><span class="stat__label">Products</span></div>
+      <div class="stat"><span class="stat__num">2M+</span><span class="stat__label">Happy Customers</span></div>
+      <div class="stat"><span class="stat__num">Free</span><span class="stat__label">Shipping $50+</span></div>
+    </div>
+  </div>
+  <div class="hero__visual">
+    <div class="hero__blob"></div>
+    <div class="hero__cards">
+      <div class="hero__card hero__card--1">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&q=80" alt="Headphones">
+        <div class="hero__card-tag">🔥 Trending</div>
+      </div>
+      <div class="hero__card hero__card--2">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&q=80" alt="Watch">
+        <div class="hero__card-tag">⭐ Top Rated</div>
+      </div>
+      <div class="hero__card hero__card--3">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&q=80" alt="Shoes">
+        <div class="hero__card-tag">💸 Sale</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Shop by Category</h2>
+      <a href="/products" class="see-all">See all →</a>
+    </div>
+    <div class="categories-grid">
+      <a href="/products?category=Electronics" class="cat-card cat-card--electronics">
+        <div class="cat-card__icon">📱</div>
+        <h3>Electronics</h3>
+        <p>Gadgets & Tech</p>
+        <span class="cat-card__arrow">→</span>
+      </a>
+      <a href="/products?category=Fashion" class="cat-card cat-card--fashion">
+        <div class="cat-card__icon">👗</div>
+        <h3>Fashion</h3>
+        <p>Style & Trends</p>
+        <span class="cat-card__arrow">→</span>
+      </a>
+      <a href="/products?category=Home+%26+Kitchen" class="cat-card cat-card--home">
+        <div class="cat-card__icon">🏠</div>
+        <h3>Home & Kitchen</h3>
+        <p>Decor & Essentials</p>
+        <span class="cat-card__arrow">→</span>
+      </a>
+      <a href="/products?category=Sports" class="cat-card cat-card--sports">
+        <div class="cat-card__icon">⚽</div>
+        <h3>Sports</h3>
+        <p>Fitness & Outdoors</p>
+        <span class="cat-card__arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>🔥 Featured Products</h2>
+      <a href="/products" class="see-all">See all →</a>
+    </div>
+    <div class="products-grid">
+      {{#each featured}}
+        {{> product-card}}
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<section class="promo-banner">
+  <div class="container">
+    <div class="promo-banner__inner">
+      <div class="promo-banner__text">
+        <div class="promo-tag">⚡ Limited Time</div>
+        <h2>Up to 40% OFF</h2>
+        <p>On selected Electronics & Fashion items. Don't miss out!</p>
+        <a href="/products?sort=price-asc" class="btn btn--white btn--lg">Grab the Deal →</a>
+      </div>
+      <div class="promo-banner__imgs">
+        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300&q=80" alt="Sale" class="promo-img">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEW ARRIVALS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>✨ New Arrivals</h2>
+      <a href="/products?badge=New" class="see-all">See all →</a>
+    </div>
+    <div class="products-grid">
+      {{#each newArrivals}}
+        {{> product-card}}
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<!-- ON SALE -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>💸 On Sale</h2>
+      <a href="/products?sort=price-asc" class="see-all">See all →</a>
+    </div>
+    <div class="products-grid">
+      {{#each onSale}}
+        {{> product-card}}
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BADGES -->
+<section class="trust-section">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">🚚</div>
+        <h4>Free Shipping</h4>
+        <p>On all orders over $50</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🔄</div>
+        <h4>Easy Returns</h4>
+        <p>30-day hassle-free returns</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🔒</div>
+        <h4>Secure Payment</h4>
+        <p>256-bit SSL encryption</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">⭐</div>
+        <h4>Top Rated</h4>
+        <p>4.8/5 from 2M+ reviews</p>
+      </div>
+    </div>
+  </div>
+</section>

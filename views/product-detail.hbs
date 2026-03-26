@@ -1,0 +1,98 @@
+<div class="product-detail container">
+  <div class="breadcrumb">
+    <a href="/">Home</a> / <a href="/products">Shop</a> / <a href="/products?category={{product.category}}">{{product.category}}</a> / {{product.name}}
+  </div>
+
+  <div class="detail-grid">
+    <!-- Image -->
+    <div class="detail-image">
+      <div class="detail-badge" data-badge="{{product.badge}}">{{product.badge}}</div>
+      <img src="{{product.image}}" alt="{{product.name}}" class="detail-main-img" id="mainImg">
+      <div class="detail-thumbnails">
+        <img src="{{product.image}}" alt="" class="thumb active" onclick="document.getElementById('mainImg').src=this.src;document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active')">
+        <img src="{{product.image}}?v=2" alt="" class="thumb" onclick="document.getElementById('mainImg').src=this.src;document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active')">
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="detail-info">
+      <span class="detail-category">{{product.category}}</span>
+      <h1 class="detail-title">{{product.name}}</h1>
+
+      <div class="detail-rating">
+        <span class="stars stars--lg">{{stars product.rating}}</span>
+        <span class="rating-val">{{product.rating}}</span>
+        <span class="review-count">({{product.reviews}} reviews)</span>
+      </div>
+
+      <div class="detail-price">
+        <span class="price--current price--xl">${{formatPrice product.price}}</span>
+        {{#gt product.originalPrice product.price}}
+          <span class="price--original">${{formatPrice product.originalPrice}}</span>
+          <span class="price--save">Save ${{formatPrice (add product.originalPrice product.price)}}</span>
+        {{/gt}}
+      </div>
+
+      <p class="detail-desc">{{product.description}}</p>
+
+      <div class="detail-features">
+        <h4>Key Features</h4>
+        <ul>
+          {{#each product.features}}
+            <li>✓ {{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <!-- Color Selection -->
+      {{#if product.colors}}
+        <div class="detail-colors">
+          <h4>Color: <span id="selectedColor">{{product.colors.[0]}}</span></h4>
+          <div class="color-options">
+            {{#each product.colors}}
+              <button class="color-btn {{#if (eq @index 0)}}active{{/if}}"
+                onclick="document.getElementById('selectedColor').textContent=this.dataset.color;document.getElementById('colorInput').value=this.dataset.color;document.querySelectorAll('.color-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')"
+                data-color="{{this}}">{{this}}</button>
+            {{/each}}
+          </div>
+        </div>
+      {{/if}}
+
+      <!-- Add to Cart -->
+      <form action="/cart/add" method="POST" class="detail-cart-form">
+        <input type="hidden" name="productId" value="{{product.id}}">
+        <input type="hidden" name="color" id="colorInput" value="{{product.colors.[0]}}">
+        <div class="qty-row">
+          <label>Qty</label>
+          <div class="qty-control">
+            <button type="button" onclick="const q=document.getElementById('qty');q.value=Math.max(1,parseInt(q.value)-1)">−</button>
+            <input type="number" name="quantity" id="qty" value="1" min="1" max="{{product.stock}}">
+            <button type="button" onclick="const q=document.getElementById('qty');q.value=Math.min({{product.stock}},parseInt(q.value)+1)">+</button>
+          </div>
+          <span class="stock-info">{{product.stock}} in stock</span>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg btn--full">
+          🛒 Add to Cart
+        </button>
+      </form>
+
+      <div class="detail-meta">
+        <span>🚚 Free shipping on orders over $50</span>
+        <span>🔄 30-day returns</span>
+        <span>🔒 Secure checkout</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  {{#if related.length}}
+    <section class="related-section">
+      <h2>You May Also Like</h2>
+      <div class="products-grid">
+        {{#each related}}
+          {{> product-card}}
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+</div>
